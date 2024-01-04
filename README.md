@@ -91,16 +91,9 @@ Take a look at the [Quill](https://quilljs.com/) website for more documentation,
 <link href="//cdn.quilljs.com/1.0.0/quill.core.css" rel="stylesheet" />
 <script src="//cdn.quilljs.com/1.0.0/quill.core.js"></script>
 ```
+### Demo
+<img width="543" alt="image" src="https://github.com/yxy3511/quill-alink/assets/21326656/48d45365-6714-40b5-9b27-ba18ca4e8164">
+<img width="541" alt="image" src="https://github.com/yxy3511/quill-alink/assets/21326656/16fc5ea9-8752-4f9d-8271-77dec60b0737">
+<img width="541" alt="image" src="https://github.com/yxy3511/quill-alink/assets/21326656/24d2b0fd-702f-4c05-98e9-2e1f1ef652cd">
 
-## Community
 
-Get help or stay up to date.
-
-- [Contribute](https://github.com/quilljs/quill/blob/develop/.github/CONTRIBUTING.md) on [Issues](https://github.com/quilljs/quill/issues)
-- Follow [@jhchen](https://twitter.com/jhchen) and [@quilljs](https://twitter.com/quilljs) on Twitter
-- Ask questions on [Stack Overflow](https://stackoverflow.com/questions/tagged/quill)
-- If privacy is required, email support@quilljs.com
-
-## License
-
-BSD 3-clause
