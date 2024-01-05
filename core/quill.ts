@@ -852,7 +852,7 @@ function overload(
 ): NormalizedIndexLength {
   let formats = {};
   // @ts-expect-error
-  if (index && typeof index.index === 'number' && typeof index.length === 'number') {
+  if (typeof index.index === 'number' && typeof index.length === 'number') {
     // Allow for throwaway end (used by insertText/insertEmbed)
     if (typeof length !== 'number') {
       // @ts-expect-error
