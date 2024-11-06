@@ -79,6 +79,11 @@ class Toolbar extends Module<ToolbarProps> {
     format = format.slice('ql-'.length);
     if (input.tagName === 'BUTTON') {
       input.setAttribute('type', 'button');
+      const titleConfig: Record<string, string> = {
+        link: '添加链接 (⌘+K)',
+      };
+      titleConfig[format] &&
+        input.setAttribute('data-title', titleConfig[format]);
     }
     if (
       this.handlers[format] == null &&

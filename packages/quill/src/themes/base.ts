@@ -13,6 +13,7 @@ import type History from '../modules/history.js';
 import type Keyboard from '../modules/keyboard.js';
 import type Uploader from '../modules/uploader.js';
 import type Selection from '../core/selection.js';
+import Delta from 'quill-delta';
 
 const ALIGNS = [false, 'center', 'right', 'justify'];
 
@@ -223,15 +224,31 @@ BaseTheme.DEFAULTS = merge({}, Theme.DEFAULTS, {
 
 class BaseTooltip extends Tooltip {
   textbox: HTMLInputElement | null;
+  labelbox: HTMLInputElement | null;
   linkRange?: Range;
 
   constructor(quill: Quill, boundsContainer?: HTMLElement) {
     super(quill, boundsContainer);
-    this.textbox = this.root.querySelector('input[type="text"]');
+    this.labelbox = this.root.querySelector(
+      'input[type="text"][data-type="text"]',
+    );
+    this.textbox = this.root.querySelector(
+      'input[type="text"][data-type="link"]',
+    );
     this.listen();
   }
 
   listen() {
+    // @ts-expect-error Fix me later
+    this.labelbox.addEventListener('keydown', event => {
+      if (event.key === 'Enter') {
+        this.textbox?.focus();
+        event.preventDefault();
+      } else if (event.key === 'Escape') {
+        this.cancel();
+        event.preventDefault();
+      }
+    });
     // @ts-expect-error Fix me later
     this.textbox.addEventListener('keydown', (event) => {
       if (event.key === 'Enter') {
@@ -249,13 +266,22 @@ class BaseTooltip extends Tooltip {
     this.restoreFocus();
   }
 
-  edit(mode = 'link', preview: string | null = null) {
+  edit(mode = 'link', preview: string | null = null, from = 'other') {
     this.root.classList.remove('ql-hidden');
     this.root.classList.add('ql-editing');
-    if (this.textbox == null) return;
+    if (this.textbox == null || this.labelbox == null) return;
+
+    const isCreate = from === 'create';
+    if (preview != null) {
+      this.labelbox.value = isCreate
+        ? preview
+        : this.quill.getText(this.linkRange);
+    }
+
+    console.log('preview:', preview, this.quill.getText(this.linkRange))
 
     if (preview != null) {
-      this.textbox.value = preview;
+      this.textbox.value = isCreate ? '' : preview;
     } else if (mode !== this.root.getAttribute('data-mode')) {
       this.textbox.value = '';
     }
@@ -263,12 +289,27 @@ class BaseTooltip extends Tooltip {
     if (bounds != null) {
       this.position(bounds);
     }
+
+    console.log('textbox & this.labelbox:', this.textbox.value, this.labelbox)
+
+    this.labelbox.setAttribute(
+      'placeholder',
+      this.labelbox.getAttribute(`data-${mode}`) || '',
+    );
     this.textbox.select();
     this.textbox.setAttribute(
       'placeholder',
       this.textbox.getAttribute(`data-${mode}`) || '',
     );
     this.root.setAttribute('data-mode', mode);
+
+    setTimeout(() => {
+      if (!this.quill.selection.savedRange.length) {
+        this.labelbox?.focus();
+      } else {
+        this.textbox?.focus();
+      }
+    });
   }
 
   restoreFocus() {
@@ -278,21 +319,46 @@ class BaseTooltip extends Tooltip {
   save() {
     // @ts-expect-error Fix me later
     let { value } = this.textbox;
+
     switch (this.root.getAttribute('data-mode')) {
       case 'link': {
+        if (this.labelbox == null) return 
         const { scrollTop } = this.quill.root;
-        if (this.linkRange) {
-          this.quill.formatText(
-            this.linkRange,
-            'link',
-            value,
-            Emitter.sources.USER,
-          );
-          delete this.linkRange;
-        } else {
+        const { value: text } = this.labelbox;
+        if (!value || !text) {
+          this.cancel();
           this.restoreFocus();
-          this.quill.format('link', value, Emitter.sources.USER);
+          return;
         }
+        if (!value.startsWith('https://') && !value.startsWith('http://')) {
+          value = 'https://' + value;
+        }
+
+        if (!this.linkRange) {
+          this.linkRange = {
+            index: this.quill.selection.savedRange.index,
+            length: this.quill.selection.savedRange.length,
+          }
+        }
+        const delta = new Delta()
+          .retain(this.linkRange.index)
+          .delete(this.linkRange.length)
+          .insert(text);
+        this.quill.updateContents(delta, Emitter.sources.USER);
+        this.linkRange.length = text.length;
+
+        this.quill.formatText(
+          this.linkRange,
+          'link',
+          value,
+          Emitter.sources.USER,
+        );
+        this.quill.setSelection(
+          this.linkRange.index + text.length,
+          Emitter.sources.USER,
+        );
+        delete this.linkRange;
+
         this.quill.root.scrollTop = scrollTop;
         break;
       }
@@ -323,6 +389,7 @@ class BaseTooltip extends Tooltip {
     // @ts-expect-error Fix me later
     this.textbox.value = '';
     this.hide();
+    this.restoreFocus();
   }
 }
 

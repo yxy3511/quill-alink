@@ -18,17 +18,37 @@ const TOOLBAR_CONFIG: ToolbarConfig = [
 ];
 
 class SnowTooltip extends BaseTooltip {
+  // static TEMPLATE = [
+  //   '<a class="ql-preview" rel="noopener noreferrer" target="_blank" href="about:blank"></a>',
+  //   '<input type="text" data-formula="e=mc^2" data-link="https://quilljs.com" data-video="Embed URL">',
+  //   '<a class="ql-action"></a>',
+  //   '<a class="ql-remove"></a>',
+  // ].join('');
+
   static TEMPLATE = [
-    '<a class="ql-preview" rel="noopener noreferrer" target="_blank" href="about:blank"></a>',
-    '<input type="text" data-formula="e=mc^2" data-link="https://quilljs.com" data-video="Embed URL">',
-    '<a class="ql-action"></a>',
-    '<a class="ql-remove"></a>',
+    '<div class="ql-toolbar-row">',
+      '<a class="ql-preview" rel="noopener noreferrer" target="_blank" href="about:blank"></a>',
+      '<div class="ql-btns">',
+        '<a class="ql-action"><i class="icon iconfont icon-edit"></i></a>',
+        '<a class="ql-remove"><i class="icon iconfont icon-delete"></i></a>',
+        '<a class="ql-viewlink"><i class="icon iconfont icon-outlined"></i></a>',
+      '</div>',
+    '</div>',
+    '<div class="input-row row-text">文本：<input type="text" data-type="text" data-link="请输入文本" data-video="Embed URL"></div>',
+    '<div class="input-row row-link">链接：<input type="text" data-type="link" data-link="粘贴或输入一个超链接" data-video="Embed URL"></div>',
+    '<button class="ql-submit">确定</button>',
   ].join('');
 
   preview = this.root.querySelector('a.ql-preview');
 
   listen() {
     super.listen();
+    // @ts-expect-error Fix me later
+    this.root
+      .querySelector('.ql-submit').addEventListener('click', event => {
+        this.save();
+        event.preventDefault();
+      });
     // @ts-expect-error Fix me later
     this.root
       .querySelector('a.ql-action')
@@ -38,6 +58,15 @@ class SnowTooltip extends BaseTooltip {
         } else {
           // @ts-expect-error Fix me later
           this.edit('link', this.preview.textContent);
+        }
+        event.preventDefault();
+      });
+    // @ts-expect-error Fix me later
+    this.root
+      .querySelector('a.ql-viewlink')
+      .addEventListener('click', event => {
+        if (this.preview?.textContent) {
+          window.open(this.preview.textContent, '_blank');
         }
         event.preventDefault();
       });
@@ -128,17 +157,17 @@ SnowTheme.DEFAULTS = merge({}, BaseTheme.DEFAULTS, {
         link(value: string) {
           if (value) {
             const range = this.quill.getSelection();
-            if (range == null || range.length === 0) return;
-            let preview = this.quill.getText(range);
-            if (
-              /^\S+@\S+\.\S+$/.test(preview) &&
-              preview.indexOf('mailto:') !== 0
-            ) {
-              preview = `mailto:${preview}`;
-            }
+            // if (range == null || range.length === 0) return;
+            let preview = range ? this.quill.getText(range) : '';
+            // if (
+            //   /^\S+@\S+\.\S+$/.test(preview) &&
+            //   preview.indexOf('mailto:') !== 0
+            // ) {
+            //   preview = `mailto:${preview}`;
+            // }
             // @ts-expect-error
             const { tooltip } = this.quill.theme;
-            tooltip.edit('link', preview);
+            tooltip.edit('link', preview, 'create');
           } else {
             this.quill.format('link', false, Quill.sources.USER);
           }
