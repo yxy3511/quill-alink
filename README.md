@@ -106,9 +106,14 @@ BSD 3-clause
 ## Demo
 alink分支主要是修改了编辑链接时的样式,可以在编辑链接的同时也修改文本。
 
-![image](https://github.com/user-attachments/assets/edf5a2e5-c450-4861-9e63-ff77bcfffc78)
-![image](https://github.com/user-attachments/assets/e28f1a95-005f-41f8-b2eb-d05368d0293d)
-![image](https://github.com/user-attachments/assets/b6b211c2-0320-4f94-8b1b-41fbf87629af)
+<img width="541" alt="image" src="https://github.com/user-attachments/assets/f3848251-fa22-4080-b17e-94844b42d412">
+<img width="531" alt="image" src="https://github.com/user-attachments/assets/6671f1f8-1f98-427e-a527-b35d9a4defd8">
+<img width="538" alt="image" src="https://github.com/user-attachments/assets/c44dbf3d-ba39-4d45-95cb-e4d430f72470">
+<img width="541" alt="image" src="https://github.com/user-attachments/assets/21dd3d06-00bc-4beb-9920-ee01a6d9c31f">
+
+
+
+
 
 
 
