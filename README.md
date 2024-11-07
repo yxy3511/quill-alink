@@ -102,3 +102,11 @@ Get help or stay up to date.
 ## License
 
 BSD 3-clause
+
+```
+### Demo
+alink分支主要是按需求修改了添加链接和编辑链接时的样式。可以在编辑url的同时修改文本。
+
+<img width="543" alt="image" src="https://github.com/yxy3511/quill-alink/assets/21326656/48d45365-6714-40b5-9b27-ba18ca4e8164">
+<img width="541" alt="image" src="https://github.com/yxy3511/quill-alink/assets/21326656/16fc5ea9-8752-4f9d-8271-77dec60b0737">
+<img width="541" alt="image" src="https://github.com/yxy3511/quill-alink/assets/21326656/24d2b0fd-702f-4c05-98e9-2e1f1ef652cd">
