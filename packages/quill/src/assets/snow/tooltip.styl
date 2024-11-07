@@ -1,53 +1,217 @@
 tooltipMargin = 8px
 
-.ql-snow
-  .ql-tooltip
-    background-color: #fff
-    border: 1px solid borderColor
-    box-shadow: 0px 0px 5px shadowColor
-    color: textColor
-    padding: 5px 12px
-    white-space: nowrap
-    &::before
-      content: "Visit URL:"
-      line-height: 26px
-      margin-right: tooltipMargin
-    input[type=text]
-      display: none
-      border: 1px solid borderColor
-      font-size: 13px
-      height: 26px
-      margin: 0px
-      padding: 3px 5px
-      width: 170px
-    a.ql-preview
-      display: inline-block
-      max-width: 200px
-      overflow-x: hidden
-      text-overflow: ellipsis
-      vertical-align: top
-    a.ql-action::after
-      border-right: 1px solid borderColor
-      content: 'Edit'
-      margin-left: tooltipMargin*2
-      padding-right: tooltipMargin
-    a.ql-remove::before
-      content: 'Remove'
-      margin-left: tooltipMargin
-    a
-      line-height: 26px
-  .ql-tooltip.ql-editing
-    a.ql-preview, a.ql-remove
-      display: none
-    input[type=text]
-      display: inline-block
-    a.ql-action::after
-      border-right: 0px
-      content: 'Save'
-      padding-right: 0px
-  .ql-tooltip[data-mode=link]::before
-    content: "Enter link:"
-  .ql-tooltip[data-mode=formula]::before
-    content: "Enter formula:"
-  .ql-tooltip[data-mode=video]::before
-    content: "Enter video:"
+.ql-container.ql-disabled .ql-tooltip {
+  visibility: hidden;
+}
+
+.ql-snow .ql-tooltip {
+  position: absolute;
+  transform: translateY(10px);
+}
+.ql-snow .ql-tooltip a {
+  cursor: pointer;
+  text-decoration: none;
+}
+.ql-snow .ql-tooltip.ql-flip {
+  transform: translateY(-10px);
+}
+
+.ql-snow .ql-tooltip {
+  background-color: #fff;
+/*  border: 1px solid #ccc;*/
+  box-shadow: 0px 0px 5px #ddd;
+  color: #252525;
+  padding: 5px 12px;
+  white-space: nowrap;
+  box-shadow: 0px 2px 8px 0px rgba(0,0,0,0.15);
+  z-index: 2;
+}
+.ql-snow .ql-tooltip .ql-toolbar-row {
+  display: flex;
+  justify-content: space-between;
+  width: 350px;
+  height: 40px;
+  padding: 5px 10px;
+}
+
+.ql-snow .ql-editor a {
+  text-decoration: none;
+}
+
+.ql-snow .ql-tooltip .ql-toolbar-row a {
+  color: #252525;
+}
+.ql-snow .ql-tooltip .ql-toolbar-row a.ql-preview {
+  flex: 1;
+  text-align: left;
+  text-overflow: ellipsis;
+  line-height: 30px;
+}
+.ql-snow .ql-tooltip .ql-toolbar-row .ql-btns a {
+  display: inline-flex;
+  width: 32px;
+  height: 32px;
+  background: rgba(239,239,239,0.4);
+  border-radius: 4px;
+  margin-right: 5px;
+  justify-content: center;
+  align-items: center;
+/*  color: #252525;*/
+}
+.ql-snow .ql-tooltip .ql-toolbar-row .ql-btns a i {
+  font-size: 10px;
+}
+.ql-snow .ql-tooltip .ql-toolbar-row .ql-btns a:last-child {
+  margin-right: 0;
+}
+/*.ql-snow .ql-tooltip::before {
+  content: "Visit URL:";
+  line-height: 26px;
+  margin-right: 8px;
+}*/
+.ql-snow .ql-tooltip button {
+  display: none;
+}
+/*.ql-snow .ql-tooltip input[type=text] {*/
+.ql-snow .ql-tooltip div.input-row {
+  display: none;
+/*  border: 1px solid #ccc;*/
+  font-size: 13px;
+  height: 26px;
+  margin: 0px;
+  padding: 3px 5px;
+/*  width: 170px;*/
+}
+.ql-snow .ql-tooltip a.ql-preview {
+  display: inline-block;
+  max-width: 200px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  vertical-align: top;
+}
+/*.ql-snow .ql-tooltip a.ql-action::after {
+  border-right: 1px solid #ccc;
+  content: 'Edit';
+  margin-left: 16px;
+  padding-right: 8px;
+}
+.ql-snow .ql-tooltip a.ql-remove::before {
+  content: 'Remove';
+  margin-left: 8px;
+}*/
+
+.ql-snow .ql-tooltip.ql-editing {
+  text-align:  left;
+  width: 400px;
+  height: 94px;
+  padding: 10px;
+}
+.ql-snow .ql-tooltip.ql-editing:not(.ql-hidden) {
+  display: block;
+}
+.ql-snow .ql-tooltip.ql-editing button {
+  display: inline-block;
+  width: 56px;
+  height: 32px;
+  background: #1890FF;
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+  letter-spacing: 4;
+  margin-left: 10px;
+  font-size: 14px;
+}
+.ql-snow .ql-tooltip a {
+  line-height: 26px;
+}
+/*.ql-snow .ql-tooltip.ql-editing a.ql-preview,
+.ql-snow .ql-tooltip.ql-editing a.ql-action,
+.ql-snow .ql-tooltip.ql-editing a.ql-viewlink,
+.ql-snow .ql-tooltip.ql-editing a.ql-remove {
+  display: none;
+}*/
+.ql-snow .ql-tooltip.ql-editing .ql-toolbar-row {
+  display: none;
+}
+/*.ql-snow .ql-tooltip.ql-editing input[type=text] {*/
+.ql-snow .ql-tooltip.ql-editing div.input-row.row-text {
+  display: block;
+}
+.ql-snow .ql-tooltip.ql-editing div.input-row {
+  display: inline-block;
+/*  width: 305px;*/
+  height: 32px;
+  margin-bottom: 10px;
+}
+.ql-snow .ql-tooltip.ql-editing div.input-row:last-child {
+  margin-bottom: 0px;
+}
+.ql-snow .ql-tooltip.ql-editing div.input-row input {
+  width: 260px;
+  height: 32px;
+  background: #FFFFFF;
+  border-radius: 4px;
+  border: 1px solid rgba(0,0,0,0.15);
+  padding: 5px 12px;
+  outline-style: none;
+}
+.ql-snow .ql-tooltip.ql-editing div.input-row input::placeholder {
+  color: rgba(0,0,0,0.25);
+  font-size: 14px;
+}
+.ql-snow .ql-tooltip.ql-editing div.input-row input:focus-visible {
+  border: 1px solid #1890FF;
+}
+
+
+// .ql-snow
+//   .ql-tooltip
+//     background-color: #fff
+//     border: 1px solid borderColor
+//     box-shadow: 0px 0px 5px shadowColor
+//     color: textColor
+//     padding: 5px 12px
+//     white-space: nowrap
+//     &::before
+//       content: "Visit URL:"
+//       line-height: 26px
+//       margin-right: tooltipMargin
+//     input[type=text]
+//       display: none
+//       border: 1px solid borderColor
+//       font-size: 13px
+//       height: 26px
+//       margin: 0px
+//       padding: 3px 5px
+//       width: 170px
+//     a.ql-preview
+//       display: inline-block
+//       max-width: 200px
+//       overflow-x: hidden
+//       text-overflow: ellipsis
+//       vertical-align: top
+//     a.ql-action::after
+//       border-right: 1px solid borderColor
+//       content: 'Edit'
+//       margin-left: tooltipMargin*2
+//       padding-right: tooltipMargin
+//     a.ql-remove::before
+//       content: 'Remove'
+//       margin-left: tooltipMargin
+//     a
+//       line-height: 26px
+//   .ql-tooltip.ql-editing
+//     a.ql-preview, a.ql-remove
+//       display: none
+//     input[type=text]
+//       display: inline-block
+//     a.ql-action::after
+//       border-right: 0px
+//       content: 'Save'
+//       padding-right: 0px
+//   .ql-tooltip[data-mode=link]::before
+//     content: "Enter link:"
+//   .ql-tooltip[data-mode=formula]::before
+//     content: "Enter formula:"
+//   .ql-tooltip[data-mode=video]::before
+//     content: "Enter video:"

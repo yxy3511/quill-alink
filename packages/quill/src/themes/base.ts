@@ -278,8 +278,6 @@ class BaseTooltip extends Tooltip {
         : this.quill.getText(this.linkRange);
     }
 
-    console.log('preview:', preview, this.quill.getText(this.linkRange))
-
     if (preview != null) {
       this.textbox.value = isCreate ? '' : preview;
     } else if (mode !== this.root.getAttribute('data-mode')) {
@@ -289,8 +287,6 @@ class BaseTooltip extends Tooltip {
     if (bounds != null) {
       this.position(bounds);
     }
-
-    console.log('textbox & this.labelbox:', this.textbox.value, this.labelbox)
 
     this.labelbox.setAttribute(
       'placeholder',
