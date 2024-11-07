@@ -103,10 +103,8 @@ Get help or stay up to date.
 
 BSD 3-clause
 
-
-```
-### Demo
-alink分支主要是按需求修改了添加链接和编辑链接时的样式。可以在编辑url的同时修改文本。
+## Demo
+alink分支主要是修改了编辑链接时的样式,可以在编辑链接的同时也修改文本。
 
 ![image](https://github.com/user-attachments/assets/edf5a2e5-c450-4861-9e63-ff77bcfffc78)
 ![image](https://github.com/user-attachments/assets/e28f1a95-005f-41f8-b2eb-d05368d0293d)
